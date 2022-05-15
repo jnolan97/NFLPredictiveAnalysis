@@ -8,8 +8,12 @@ from sklearn.model_selection import GridSearchCV, cross_val_score
 
 # Load preprocessed data for 2003-2017 game matchups
 df = pd.read_csv('nfl_cleaned.csv')
+df2 = pd.read_csv('spreadspoke_scores.csv')
+print('df: ', df.columns, 'df2: ', df2.columns)
+# mydir = {}
+# print(dir(mydir))
+# print(df.head())
 df.describe()
-
 # Specify non-predictive attributes and target variable
 non_pred = ['year', 'week', 'h_team', 'a_team', 'temp']
 target = ['h_wins', 'line_w', 'over_w']
@@ -67,7 +71,7 @@ tuning = list(get_idx(2016))
 x_train = tuning[0]
 y_train = tuning[1]
 cv = tuning[2]
-
+# print('tuning: ', tuning, ' x_train: ', x_train, ' y_train: ', y_train, ' cv: ', cv)
 # Set random seed and create a dataframe to store training results
 np.random.seed(0)
 tune, models, mod_name, param = [], [], [], []
@@ -79,9 +83,9 @@ gb= {'n_estimators':[100,150,200], 'max_depth':[1,2,3]}
 nn= {'hidden_layer_sizes': [(50,50), (75,75), (50,75,50)], 'activation': ['tanh', 'relu', 'logistic']}
 
 models.append(('Logistic Regression', LogisticRegression(random_state=0), lr))
-models.append(('Random Forests', RandomForestClassifier(random_state=0), rf))
-models.append(('Gradient Boosting', GradientBoostingClassifier(random_state=0), gb))
-models.append(('Neural Networks', MLPClassifier(random_state=0), nn))
+# models.append(('Random Forests', RandomForestClassifier(random_state=0), rf))
+# models.append(('Gradient Boosting', GradientBoostingClassifier(random_state=0), gb))
+# models.append(('Neural Networks', MLPClassifier(random_state=0), nn))
 
 # Model tuning
 for name, model, par in models:
